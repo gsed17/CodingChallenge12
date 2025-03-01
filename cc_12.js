@@ -26,3 +26,38 @@ Array.from(metricCards).forEach(card => {
     card.style.backgroundColor = "lightblue"; // Change background color
     card.innerHTML += " - Updated"; // Append "- Updated" text
 });
+
+// Task 3 - Implemented Dynamic Inventory List
+
+// Select the inventory list
+const inventoryList = document.getElementById("inventoryList");
+
+// Function to add a new product item
+function addProductItem(productName) {
+    const newItem = document.createElement("li");
+
+    // Set attributes
+    newItem.setAttribute("class", "product-item");
+    newItem.setAttribute("data-product", productName);
+
+    // Set content
+    newItem.innerText = productName;
+
+    // Add event listener to remove item when clicked
+    newItem.addEventListener("click", () => {
+        inventoryList.removeChild(newItem);
+        console.log(`Removed: ${productName}`);
+    });
+
+    // Append to inventory list
+    inventoryList.appendChild(newItem);
+}
+
+// Adding event listeners to buttons
+document.querySelectorAll("button").forEach(button => {
+    button.addEventListener("click", () => {
+        const productName = button.innerText.replace("Add ", "");
+        addProductItem(productName);
+    });
+});
+
