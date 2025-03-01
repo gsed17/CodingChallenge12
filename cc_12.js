@@ -23,7 +23,7 @@ const metricCards = document.querySelectorAll(".metric-card");
 
 // Convert NodeList to an array and update each card
 Array.from(metricCards).forEach(card => {
-    card.style.backgroundColor = "lightblue"; // Change background color
+    card.style.backgroundColor = "green"; // Change background color
     card.innerHTML += " - Updated"; // Append "- Updated" text
 });
 
@@ -60,4 +60,37 @@ document.querySelectorAll("button").forEach(button => {
         addProductItem(productName);
     });
 });
+
+// Task 4 - Demonstrated Event Bubbling in Customer Section
+
+// Select the customer section
+const customerSection = document.getElementById("customerSection");
+
+// Function to create a new customer card
+function addCustomerCard(customerName) {
+    const customerCard = document.createElement("div");
+
+    // Set attributes and content
+    customerCard.setAttribute("class", "customer-card");
+    customerCard.textContent = customerName;
+
+    // Add event listener for the customer card
+    customerCard.addEventListener("click", (event) => {
+        console.log("Customer card clicked");
+        event.stopPropagation(); // Prevents bubbling to parent
+    });
+
+    // Append to customer section
+    customerSection.appendChild(customerCard);
+}
+
+// Event listener on parent to demonstrate bubbling
+customerSection.addEventListener("click", () => {
+    console.log("Customer section clicked");
+});
+
+// Adding sample customers
+addCustomerCard("Frodo");
+addCustomerCard("Bilbo");
+
 
