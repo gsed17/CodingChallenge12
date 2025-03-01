@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Business Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        .metric-card {
+            padding: 10px;
+            margin: 10px;
+            background-color: lightgray;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .product-item {
+            cursor: pointer;
+            color: blue;
+        }
+        .customer-card {
+            padding: 10px;
+            margin: 5px;
+            background-color: lightblue;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #dashboard, #inventoryList, #customerSection {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Interactive Business Dashboard</h1>
+
+    <!-- Dashboard Metrics Section -->
+    <h2>Dashboard Metrics</h2>
+    <div id="dashboard"></div>
+
+    <!-- Inventory List Section -->
+    <h2>Inventory List</h2>
+    <ul id="inventoryList"></ul>
+    <button onclick="addProductItem('Laptop')">Add Laptop</button>
+    <button onclick="addProductItem('Smartphone')">Add Smartphone</button>
+
+    <!-- Customer Section -->
+    <h2>Customer Section</h2>
+    <div id="customerSection"></div>
+
+    <!-- Link to JavaScript File -->
+    <script src="cc_12.js"></script>
+
+</body>
+</html>
