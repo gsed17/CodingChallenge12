@@ -13,8 +13,6 @@ revenueCard.setAttribute("id", "revenueCard");
 
 // Populate the card with content
 revenueCard.innerHTML = "<h2>Revenue</h2><p>$0</p>";
-
-// Append the new metric card to the dashboard
 dashboard.appendChild(revenueCard);
 
 
@@ -87,13 +85,12 @@ function addCustomerCard(customerName) {
     // Add event listener to customer card
     customerCard.addEventListener("click", (event) => {
         console.log(`Customer card clicked: ${customerName}`);
-        event.stopPropagation(); // Prevents bubbling to parent
+        event.stopPropagation(); 
     });
 
     customerSection.appendChild(customerCard);
 }
 
-// Event listener on parent to demonstrate bubbling
 customerSection.addEventListener("click", () => {
     console.log("Customer section clicked");
 });
@@ -101,4 +98,4 @@ customerSection.addEventListener("click", () => {
 // Adding sample customers
 addCustomerCard("Frodo");
 addCustomerCard("Bilbo");
-addCustomerCard("Gandalf"); // Added another for testing
+addCustomerCard("Gandalf"); 
