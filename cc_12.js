@@ -1,7 +1,8 @@
 // Task 1 - Created Revenue Metric Card
 
-// Select the dashboard container
+// Select the dashboard container using both methods
 const dashboard = document.getElementById("dashboard");
+const dashboardQuery = document.querySelector("#dashboard"); // Extra selector to meet requirements
 
 // Create a new <div> element for the Revenue metric card
 const revenueCard = document.createElement("div");
@@ -16,6 +17,7 @@ revenueCard.innerHTML = "<h2>Revenue</h2><p>$0</p>";
 // Append the new metric card to the dashboard
 dashboard.appendChild(revenueCard);
 
+
 // Task 2 - Updated Metric Cards via Array Conversion
 
 // Select all metric cards
@@ -26,6 +28,7 @@ Array.from(metricCards).forEach(card => {
     card.style.backgroundColor = "green"; // Change background color
     card.innerHTML += " - Updated"; // Append "- Updated" text
 });
+
 
 // Task 3 - Implemented Dynamic Inventory List
 
@@ -46,41 +49,47 @@ function addProductItem(productName) {
     // Add event listener to remove item when clicked
     newItem.addEventListener("click", () => {
         inventoryList.removeChild(newItem);
+        updateRevenue(-100); // Decrease revenue when item is removed
         console.log(`Removed: ${productName}`);
     });
 
     // Append to inventory list
     inventoryList.appendChild(newItem);
+    updateRevenue(100); // Increase revenue when item is added
 }
 
-// Adding event listeners to buttons
+// Attach event listeners to buttons for adding inventory items
 document.querySelectorAll("button").forEach(button => {
     button.addEventListener("click", () => {
-        const productName = button.innerText.replace("Add ", "");
-        addProductItem(productName);
+        const productName = button.innerText.replace("Add ", ""); 
     });
 });
+
+// Function to update revenue
+function updateRevenue(amount) {
+    const revenueCard = document.getElementById("revenueCard");
+    let revenueValue = parseInt(revenueCard.querySelector("p").textContent.replace("$", "")) || 0;
+    revenueValue += amount;
+    revenueCard.querySelector("p").textContent = `$${revenueValue}`;
+}
 
 // Task 4 - Demonstrated Event Bubbling in Customer Section
 
 // Select the customer section
 const customerSection = document.getElementById("customerSection");
 
-// Function to create a new customer card
+// Function to create customer cards
 function addCustomerCard(customerName) {
     const customerCard = document.createElement("div");
-
-    // Set attributes and content
     customerCard.setAttribute("class", "customer-card");
     customerCard.textContent = customerName;
 
-    // Add event listener for the customer card
+    // Add event listener to customer card
     customerCard.addEventListener("click", (event) => {
-        console.log("Customer card clicked");
+        console.log(`Customer card clicked: ${customerName}`);
         event.stopPropagation(); // Prevents bubbling to parent
     });
 
-    // Append to customer section
     customerSection.appendChild(customerCard);
 }
 
@@ -92,5 +101,4 @@ customerSection.addEventListener("click", () => {
 // Adding sample customers
 addCustomerCard("Frodo");
 addCustomerCard("Bilbo");
-
-
+addCustomerCard("Gandalf"); // Added another for testing
