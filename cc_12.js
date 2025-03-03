@@ -37,7 +37,7 @@ function updateMetricCards() {
 
     metricCardArray.forEach(card => {
         card.innerHTML += "<p><i> - Updated</i></p>"; 
-        card.style.backgroundColor = "greenyellow";
+        card.style.backgroundColor = "blue";
     });
 }
 
@@ -59,7 +59,7 @@ function addInventoryItem(product, price) {
     let newLi = document.createElement("li");
     newLi.setAttribute("class", "product-item");
     newLi.setAttribute("data-product", product);
-    newLi.textContent = `${product} - $${productPrices[product].toFixed(2)}`;
+    newLi.textContent = `${product} - $${productPrices[product].toFixed(1)}`;
 
     revenue += productPrices[product];
     updateMetrics();
