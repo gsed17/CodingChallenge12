@@ -17,11 +17,11 @@ createMetricCard("revenueCard", "Revenue", 0);
 createMetricCard("profitCard", "Profit", 0);
 createMetricCard("expensesCard", "Expenses", 0);
 
-// Initialize metric values
+// Initialize financial values
 let revenue = 0;
 let expenses = 0;
 
-// Function to update metric values
+// Function to update displayed financial metrics
 function updateMetrics() {
     const profit = revenue - expenses;
     
@@ -50,10 +50,10 @@ const inventoryList = document.getElementById("inventoryList");
 // Object to store product prices
 const productPrices = {};
 
-// Function to add a new product and update **expenses** (cost of acquiring stock)
+// Function to add a new product and update expenses
 function addInventoryItem(product, price) {
     if (!productPrices[product]) {
-        productPrices[product] = price; // Store the product price
+        productPrices[product] = price; // Store product price if not set
     }
 
     let newLi = document.createElement("li");
@@ -61,7 +61,7 @@ function addInventoryItem(product, price) {
     newLi.setAttribute("data-product", product);
     newLi.textContent = `${product} - $${productPrices[product].toFixed(2)}`;
 
-    expenses += productPrices[product]; // Adding to expenses when acquiring stock
+    expenses += productPrices[product]; // Increase expenses when acquiring inventory
     updateMetrics();
 
     // Add event listener to remove item (simulate selling the product)
@@ -69,20 +69,20 @@ function addInventoryItem(product, price) {
     inventoryList.appendChild(newLi);
 }
 
-// Function to remove a product and update **revenue** (when selling it)
+// Function to remove a product and update revenue
 function removeInventoryItem(item, product) {
     if (inventoryList.contains(item)) {
         inventoryList.removeChild(item);
 
         if (productPrices[product]) {
-            revenue += productPrices[product]; // Add to revenue when sold
+            revenue += productPrices[product]; // Increase revenue when product is sold
         }
 
         updateMetrics();
     }
 }
 
-// Attach event listeners correctly to buttons to prevent multiple triggers
+// Attach event listeners correctly to buttons to prevent duplicate events
 document.querySelectorAll("button").forEach(button => {
     button.addEventListener("click", (event) => {
         event.stopPropagation(); // Prevents event bubbling
