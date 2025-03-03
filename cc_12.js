@@ -73,15 +73,12 @@ function addInventoryItem(product, price) {
 function removeInventoryItem(item, product) {
     if (inventoryList.contains(item)) {
         inventoryList.removeChild(item);
-
-        if (productPrices[product]) {
-            revenue -= productPrices[product]; // Deduct from revenue
-            expenses += productPrices[product]; // Add to expenses
-        }
-
+        revenue += productPrices[product]; // Increase revenue when selling a product
+        profit = revenue - expenses; 
         updateMetrics();
     }
 }
+
 
 // Attach event listeners correctly to buttons to prevent multiple triggers
 document.querySelectorAll("button").forEach(button => {
