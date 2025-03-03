@@ -52,22 +52,19 @@ const productPrices = {};
 
 // Function to add a new product and update Revenue
 function addInventoryItem(product, price) {
-    if (!productPrices[product]) {
-        productPrices[product] = price; // Store the product price
-    }
-
     let newLi = document.createElement("li");
     newLi.setAttribute("class", "product-item");
     newLi.setAttribute("data-product", product);
-    newLi.textContent = `${product} - $${productPrices[product].toFixed(1)}`;
+    newLi.textContent = `${product} - $${price.toFixed(2)}`;
 
-    revenue += productPrices[product];
-    updateMetrics();
+    expenses += price; 
+    profit = revenue - expenses; 
+    updateMetrics(); 
 
-    // Add event listener to remove item
     newLi.addEventListener("click", () => removeInventoryItem(newLi, product));
     inventoryList.appendChild(newLi);
 }
+
 
 // Function to remove a product and update Expenses
 function removeInventoryItem(item, product) {
