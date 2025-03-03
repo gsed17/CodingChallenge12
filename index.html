@@ -44,12 +44,19 @@
     <!-- Inventory List Section -->
     <h2>Inventory List</h2>
     <ul id="inventoryList"></ul>
-    <button onclick="addProductItem('Laptop')">Add Laptop</button>
-    <button onclick="addProductItem('Smartphone')">Add Smartphone</button>
+    <form id="productForm">
+        <input type="text" id="productName" placeholder="Product Name" required>
+        <button type="submit">Add Product</button>
+        <div id="error"></div>
+    </form>
 
     <!-- Customer Section -->
     <h2>Customer Section</h2>
-    <div id="customerSection"></div>
+    <div id="customerSection">
+        <div class="customer-card">Frodo</div>
+        <div class="customer-card">Bilbo</div>
+        <div class="customer-card">Gandalf</div>
+    </div>
 
     <!-- Link to JavaScript File -->
     <script src="cc_12.js"></script>
