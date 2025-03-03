@@ -19,12 +19,11 @@ createMetricCard("expensesCard", "Expenses", 0);
 
 // Initialize financial values
 let revenue = 0;
+let profit = 0;
 let expenses = 0;
 
 // Function to update displayed financial metrics
 function updateMetrics() {
-    const profit = revenue - expenses;
-    
     document.getElementById("revenueCard-value").textContent = `$${revenue.toFixed(2)}`;
     document.getElementById("expensesCard-value").textContent = `$${expenses.toFixed(2)}`;
     document.getElementById("profitCard-value").textContent = `$${profit.toFixed(2)}`;
@@ -50,7 +49,7 @@ const inventoryList = document.getElementById("inventoryList");
 // Object to store product prices
 const productPrices = {};
 
-// Function to add a new product and update expenses
+// Function to add a new product and increase expenses
 function addInventoryItem(product, price) {
     if (!productPrices[product]) {
         productPrices[product] = price; // Store product price if not set
@@ -69,7 +68,7 @@ function addInventoryItem(product, price) {
     inventoryList.appendChild(newLi);
 }
 
-// Function to remove a product and update revenue
+// Function to remove a product and increase revenue
 function removeInventoryItem(item, product) {
     if (inventoryList.contains(item)) {
         inventoryList.removeChild(item);
@@ -85,7 +84,7 @@ function removeInventoryItem(item, product) {
 // Attach event listeners correctly to buttons to prevent duplicate events
 document.querySelectorAll("button").forEach(button => {
     button.addEventListener("click", (event) => {
-        event.stopPropagation(); // Prevents event bubbling
+        event.stopPropagation();
         const productName = event.target.innerText.replace("Add ", "");
         const productPrice = productPrices[productName] || (Math.floor(Math.random() * 100) + 50); 
         addInventoryItem(productName, productPrice);
@@ -95,13 +94,15 @@ document.querySelectorAll("button").forEach(button => {
 // Task 4 - Demonstrated Event Bubbling in Customer Section
 const customerSection = document.getElementById("customerSection");
 
-// Function to create customer cards
+// Function to create customer cards and increase profit
 function addCustomerCard(customerName) {
     const customerCard = document.createElement("div");
     customerCard.setAttribute("class", "customer-card");
     customerCard.textContent = customerName;
 
-    // Add event listener to customer card
+    profit += 50; // Every new customer increases profit by $50 (example amount)
+    updateMetrics();
+
     customerCard.addEventListener("click", (event) => {
         console.log(`User clicked ${customerName}`);
         event.stopPropagation();
