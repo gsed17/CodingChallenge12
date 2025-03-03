@@ -20,11 +20,11 @@ createMetricCard("expensesCard", "Expenses", 0);
 // Initialize metric values
 let revenue = 0;
 let expenses = 0;
+let profit = 0;
 
 // Function to update metric values
 function updateMetrics() {
-    const profit = revenue - expenses;
-    
+    profit = revenue - expenses; // Ensure profit updates correctly
     document.getElementById("revenueCard-value").textContent = `$${revenue.toFixed(2)}`;
     document.getElementById("expensesCard-value").textContent = `$${expenses.toFixed(2)}`;
     document.getElementById("profitCard-value").textContent = `$${profit.toFixed(2)}`;
@@ -36,8 +36,7 @@ function updateMetricCards() {
     const metricCardArray = Array.from(metricCardList);
 
     metricCardArray.forEach(card => {
-        card.innerHTML += "<p><i> - Updated</i></p>"; 
-        card.style.backgroundColor = "blue";
+        card.style.backgroundColor = "blue"; // Update background color
     });
 }
 
@@ -50,10 +49,10 @@ const inventoryList = document.getElementById("inventoryList");
 // Object to store product prices
 const productPrices = {};
 
-// Function to add a new product and update Revenue
+// Function to add a new product and update Expenses
 function addInventoryItem(product, price) {
     if (!productPrices[product]) {
-        productPrices[product] = price; // Set product price
+        productPrices[product] = price; // Store product price
     }
 
     let newLi = document.createElement("li");
@@ -61,33 +60,29 @@ function addInventoryItem(product, price) {
     newLi.setAttribute("data-product", product);
     newLi.textContent = `${product} - $${productPrices[product].toFixed(2)}`;
 
-    expenses += productPrices[product] * 0.3; 
-
+    expenses += productPrices[product] * 0.3; // Expenses increase by 30% of product price
     updateMetrics();
 
     newLi.addEventListener("click", () => removeInventoryItem(newLi, product));
     inventoryList.appendChild(newLi);
+}
 
-
-// Function to remove a product and update Expenses
+// Function to remove a product and update Revenue
 function removeInventoryItem(item, product) {
     if (inventoryList.contains(item)) {
         inventoryList.removeChild(item);
         revenue += productPrices[product]; // Increase revenue when selling a product
-        profit = revenue - expenses; 
         updateMetrics();
     }
 }
 
-
 // Attach event listeners correctly to buttons to prevent multiple triggers
-document.querySelectorAll("button").forEach(button => {
-    button.addEventListener("click", (event) => {
-        event.stopPropagation(); // Prevents event bubbling
-        const productName = event.target.innerText.replace("Add ", "");
-        const productPrice = productPrices[productName] || (Math.floor(Math.random() * 100) + 50); 
-        addInventoryItem(productName, productPrice);
-    });
+document.getElementById("addLaptopButton").addEventListener("click", () => {
+    addInventoryItem("Laptop", 100);
+});
+
+document.getElementById("addSmartphoneButton").addEventListener("click", () => {
+    addInventoryItem("Smartphone", 75);
 });
 
 // Task 4 - Demonstrated Event Bubbling in Customer Section
