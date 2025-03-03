@@ -80,23 +80,23 @@ document.getElementById("addSmartphoneButton").addEventListener("click", () => {
     addInventoryItem("Smartphone", 75);
 });
 
-// Task 4 - Demonstrated Event Bubbling in Customer Section
-const customerSection = document.getElementById("customerSection");
+///Task 4 - Demonstrated Event Bubbling in Customer Section
 
-// Function to create customer cards and increase profit
+const customerSection = document.getElementById("customerSection"); 
+
+// Function to dynamically create customer cards
 function addCustomerCard(customerName) {
     const customerCard = document.createElement("div");
     customerCard.setAttribute("class", "customer-card");
     customerCard.textContent = customerName;
 
-    profit += 50; // Each new customer increases profit
-    updateMetrics();
-
+    // Attach event listener to customer card
     customerCard.addEventListener("click", (event) => {
         console.log(`User clicked ${customerName}`);
-        event.stopPropagation();
+        event.stopPropagation(); // Prevents bubbling to parent
     });
 
+    // Append new customer card to the customer section
     customerSection.appendChild(customerCard);
 }
 
