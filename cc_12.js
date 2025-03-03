@@ -25,34 +25,28 @@ let expenses = 0;
 // Function to update displayed financial metrics
 function updateMetrics() {
     document.getElementById("revenueCard-value").textContent = `$${revenue.toFixed(2)}`;
-    document.getElementById("expensesCard-value").textContent = `$${expenses.toFixed(2)}`;
     document.getElementById("profitCard-value").textContent = `$${profit.toFixed(2)}`;
+    document.getElementById("expensesCard-value").textContent = `$${expenses.toFixed(2)}`;
 }
 
 // Task 2 - Updated Metric Cards via Array Conversion
-function updateMetricCards() {
-    const metricCardList = document.querySelectorAll(".metric-card");
-    const metricCardArray = Array.from(metricCardList);
+const metricCardList = document.querySelectorAll(".metric-card");
+const metricCardArray = Array.from(metricCardList);
 
-    metricCardArray.forEach(card => {
-        card.innerHTML += "<p><i> - Updated</i></p>"; 
-        card.style.backgroundColor = "greenyellow";
-    });
-}
-
-// Call update after cards are created
-updateMetricCards();
+metricCardArray.forEach(card => {
+    card.style.backgroundColor = "greenyellow"; // Update style
+});
 
 // Task 3 - Implemented Dynamic Inventory List
 const inventoryList = document.getElementById("inventoryList");
 
-// Object to store product prices
+// Store product prices
 const productPrices = {};
 
-// Function to add a new product and increase expenses
+// Function to add a product and increase expenses
 function addInventoryItem(product, price) {
     if (!productPrices[product]) {
-        productPrices[product] = price; // Store product price if not set
+        productPrices[product] = price; // Set product price
     }
 
     let newLi = document.createElement("li");
@@ -60,10 +54,10 @@ function addInventoryItem(product, price) {
     newLi.setAttribute("data-product", product);
     newLi.textContent = `${product} - $${productPrices[product].toFixed(2)}`;
 
-    expenses += productPrices[product]; // Increase expenses when acquiring inventory
+    expenses += productPrices[product]; // Increase expenses when buying stock
     updateMetrics();
 
-    // Add event listener to remove item (simulate selling the product)
+    // Add event listener to remove item (simulate selling)
     newLi.addEventListener("click", () => removeInventoryItem(newLi, product));
     inventoryList.appendChild(newLi);
 }
@@ -72,23 +66,18 @@ function addInventoryItem(product, price) {
 function removeInventoryItem(item, product) {
     if (inventoryList.contains(item)) {
         inventoryList.removeChild(item);
-
-        if (productPrices[product]) {
-            revenue += productPrices[product]; // Increase revenue when product is sold
-        }
-
+        revenue += productPrices[product]; // Increase revenue when selling a product
         updateMetrics();
     }
 }
 
-// Attach event listeners correctly to buttons to prevent duplicate events
-document.querySelectorAll("button").forEach(button => {
-    button.addEventListener("click", (event) => {
-        event.stopPropagation();
-        const productName = event.target.innerText.replace("Add ", "");
-        const productPrice = productPrices[productName] || (Math.floor(Math.random() * 100) + 50); 
-        addInventoryItem(productName, productPrice);
-    });
+// Prevent duplicate product additions
+document.getElementById("addLaptopButton").addEventListener("click", () => {
+    addInventoryItem("Laptop", 100);
+});
+
+document.getElementById("addSmartphoneButton").addEventListener("click", () => {
+    addInventoryItem("Smartphone", 75);
 });
 
 // Task 4 - Demonstrated Event Bubbling in Customer Section
@@ -100,7 +89,7 @@ function addCustomerCard(customerName) {
     customerCard.setAttribute("class", "customer-card");
     customerCard.textContent = customerName;
 
-    profit += 50; // Every new customer increases profit by $50 (example amount)
+    profit += 50; // Each new customer increases profit
     updateMetrics();
 
     customerCard.addEventListener("click", (event) => {
