@@ -12,10 +12,23 @@ function createMetricCard(id, title, initValue) {
     dashboard.appendChild(card);
 }
 
-// Create multiple metric cards dynamically
+// Create metric cards for Revenue, Profit, and Expenses
 createMetricCard("revenueCard", "Revenue", 0);
 createMetricCard("profitCard", "Profit", 0);
 createMetricCard("expensesCard", "Expenses", 0);
+
+// Initialize metric values
+let revenue = 0;
+let expenses = 0;
+
+// Function to update metric values
+function updateMetrics() {
+    const profit = revenue - expenses;
+    
+    document.getElementById("revenueCard-value").textContent = `$${revenue}`;
+    document.getElementById("expensesCard-value").textContent = `$${expenses}`;
+    document.getElementById("profitCard-value").textContent = `$${profit}`;
+}
 
 // Task 2 - Updated Metric Cards via Array Conversion
 function updateMetricCards() {
@@ -28,47 +41,66 @@ function updateMetricCards() {
     });
 }
 
-// Call update AFTER cards are created
+// Call update after cards are created
 updateMetricCards();
 
 // Task 3 - Implemented Dynamic Inventory List
 const inventoryList = document.getElementById("inventoryList");
 
-// Function to add a new product
-function addInventoryItem(product) {
+// Function to add a new product and update Revenue
+function addInventoryItem(product, price) {
     let newLi = document.createElement("li");
     newLi.setAttribute("class", "product-item");
     newLi.setAttribute("data-product", product);
-    newLi.textContent = product;
+    newLi.textContent = `${product} - $${price}`;
 
-    newLi.addEventListener("click", () => removeInventoryItem(newLi));
+    revenue += price;
+    updateMetrics();
+
+    // Add event listener to remove item
+    newLi.addEventListener("click", () => removeInventoryItem(newLi, price));
     inventoryList.appendChild(newLi);
 }
 
-// Function to remove an inventory item
-function removeInventoryItem(item) {
+// Function to remove a product and update Expenses
+function removeInventoryItem(item, price) {
     if (inventoryList.contains(item)) {
         inventoryList.removeChild(item);
+
+        expenses += price;
+        updateMetrics();
     }
 }
 
+// Attach event listeners correctly to buttons to prevent multiple triggers
+document.getElementById("inventoryList").addEventListener("click", (event) => {
+    if (event.target.tagName === "BUTTON") {
+        const productName = event.target.innerText.replace("Add ", "");
+        const productPrice = Math.floor(Math.random() * 100) + 50; 
+        addInventoryItem(productName, productPrice);
+    }
+});
+
 // Fixing the Add Product Buttons
 document.querySelectorAll("button").forEach(button => {
-    button.addEventListener("click", () => {
-        const productName = button.innerText.replace("Add ", "");
-        addInventoryItem(productName);
+    button.addEventListener("click", (event) => {
+        event.stopPropagation(); // Prevents event bubbling
+        const productName = event.target.innerText.replace("Add ", "");
+        const productPrice = Math.floor(Math.random() * 100) + 50; 
+        addInventoryItem(productName, productPrice);
     });
 });
 
 // Task 4 - Demonstrated Event Bubbling in Customer Section
 const customerSection = document.getElementById("customerSection");
 
-// Function to create customer cards
+// Function to create customer cards without IDs
 function addCustomerCard(customerName) {
     const customerCard = document.createElement("div");
     customerCard.setAttribute("class", "customer-card");
     customerCard.textContent = customerName;
 
+    // Add event listener to customer card
     customerCard.addEventListener("click", (event) => {
         console.log(`User clicked ${customerName}`);
         event.stopPropagation();
