@@ -81,31 +81,34 @@ document.getElementById("addSmartphoneButton").addEventListener("click", () => {
 });
 
 ///Task 4 - Demonstrated Event Bubbling in Customer Section
+// Ensure the script runs only after the document has fully loaded
+document.addEventListener("DOMContentLoaded", function () {
+    const customerSection = document.getElementById("customerSection"); 
 
-const customerSection = document.getElementById("customerSection"); 
+    // Function to dynamically create customer cards
+    function addCustomerCard(customerName) {
+        const customerCard = document.createElement("div");
+        customerCard.setAttribute("class", "customer-card");
+        customerCard.textContent = customerName;
 
-// Function to dynamically create customer cards
-function addCustomerCard(customerName) {
-    const customerCard = document.createElement("div");
-    customerCard.setAttribute("class", "customer-card");
-    customerCard.textContent = customerName;
+        // Attach event listener to customer card
+        customerCard.addEventListener("click", (event) => {
+            console.log(`User clicked ${customerName}`);
+            event.stopPropagation(); // Prevents bubbling to parent
+        });
 
-    // Attach event listener to customer card
-    customerCard.addEventListener("click", (event) => {
-        console.log(`User clicked ${customerName}`);
-        event.stopPropagation(); // Prevents bubbling to parent
+        // Append new customer card to the customer section
+        customerSection.appendChild(customerCard);
+    }
+
+    // Attach event listener to parent container
+    customerSection.addEventListener("click", () => {
+        console.log("User clicked customerSection");
     });
 
-    // Append new customer card to the customer section
-    customerSection.appendChild(customerCard);
-}
-
-// Attach event listener to parent container
-customerSection.addEventListener("click", () => {
-    console.log("User clicked customerSection");
+    // Dynamically add customers
+    addCustomerCard("Frodo");
+    addCustomerCard("Bilbo");
+    addCustomerCard("Gandalf");
 });
 
-// Dynamically add customers
-addCustomerCard("Frodo");
-addCustomerCard("Bilbo");
-addCustomerCard("Gandalf");
